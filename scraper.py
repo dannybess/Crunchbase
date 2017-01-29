@@ -1,24 +1,21 @@
-# This is a template for a Python scraper on morph.io (https://morph.io)
-# including some code snippets below that you should find helpful
+import scraperwiki       
+import lxml.html           
 
-# import scraperwiki
-# import lxml.html
-#
-# # Read in a page
-# html = scraperwiki.scrape("http://foo.com")
-#
-# # Find something on the page using css selectors
-# root = lxml.html.fromstring(html)
-# root.cssselect("div[align='left']")
-#
-# # Write out to the sqlite database using scraperwiki library
-# scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
-#
-# # An arbitrary query against the database
-# scraperwiki.sql.select("* from data where 'name'='peter'")
-
-# You don't have to do things with the ScraperWiki and lxml libraries.
-# You can use whatever libraries you want: https://morph.io/documentation/python
-# All that matters is that your final data is written to an SQLite database
-# called "data.sqlite" in the current working directory which has at least a table
-# called "data".
+for j in range(0,16):
+    for i in range(0,100):
+        if ((j*100)+i) >0:
+            if ((j*100)+i) < 2:
+                html = scraperwiki.scrape("http://www.crunchbase.com/funding-rounds?page=" + str((j*100)+i))
+                root = lxml.html.fromstring(html)
+                for tr in root.cssselect("div#col2_internal tr"):
+                    tds = tr.cssselect("td")
+                    if len(tds)==5:
+                        data = {
+                            'Date' : tds[0].text_content(),
+                            'Name' : tds[1].text_content(), 
+                            'Round' : tds[2].text_content(),
+                            'Size' : tds[3].text_content(),
+                            'Investors' : tds[4].text_content(),
+                        }
+                    scraperwiki.sqlite.save(unique_keys=['Date','Name','Round','Size','Investors'], data=data)
+            
