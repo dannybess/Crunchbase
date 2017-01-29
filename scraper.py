@@ -5,7 +5,7 @@ for j in range(0,16):
     for i in range(0,100):
         if ((j*100)+i) >0:
             if ((j*100)+i) < 2:
-                html = scraperwiki.scrape("http://www.crunchbase.com/funding-rounds")
+                html = scraperwiki.scrape("https://www.crunchbase.com/funding-rounds")
                 root = lxml.html.fromstring(html)
                 for tr in root.cssselect("div#col2_internal tr"):
                     tds = tr.cssselect("td")
