@@ -9,7 +9,9 @@ for j in range(0,16):
                 html = scraperwiki.scrape("https://www.crunchbase.com/funding-rounds")
                 root = lxml.html.fromstring(html)
                 for tr in root.cssselect("div#col2_internal tr"):
+                    print "in here"
                     tds = tr.cssselect("td")
+                    print tds
                     if len(tds)==5:
                         data = {
                             'Date' : tds[0].text_content(),
