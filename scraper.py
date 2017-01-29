@@ -1,5 +1,6 @@
 import scraperwiki       
 import lxml.html           
+import urllib2
 
 for j in range(0,16):
     for i in range(0,100):
